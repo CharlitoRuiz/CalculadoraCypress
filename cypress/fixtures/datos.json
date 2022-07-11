@@ -1,4 +1,5 @@
 {
   "numero1": 17,
-  "numero2": 20
+  "numero2": 20,
+  "operacion": "Concatenate"
 }
