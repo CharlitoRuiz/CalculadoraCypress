@@ -1,36 +1,40 @@
 /// <reference types="cypress" />
-let resultado_operacion = 0;
+import calculadoraPage from '../page-objects/calculadora.page'
+import datos from '../fixtures/datos.json'
+
+let numeroA = datos.numero1, numeroB = datos.numero2, resultado_operacion = 0;
+const calculadora = new calculadoraPage();
 
 beforeEach("Ingresar a la pagina", ()=>{
   cy.visit('https://testsheepnz.github.io/BasicCalculator.html')
 });
-describe('Hacer operaciones en la calculadora', () => {
+describe.only('Hacer operaciones en la calculadora', () => {
   it('Sumar dos numeros', () => {
-    cy.get('#number1Field').type(4);
-    cy.get('#number2Field').type(3);
-    cy.get('#number1Field').invoke('val').then((numeroA)=>{
-      cy.get('#number2Field').invoke('val').then((numeroB)=>{
-        resultado_operacion = parseInt(numeroA) + parseInt(numeroB);
-      })
-    })
-    cy.get('#selectOperationDropdown').select('Add');
-    cy.get('#calculateButton').click();
-    cy.get('#numberAnswerField').invoke("val").then((resultado)=>{
-      expect(parseInt(resultado)).equal(resultado_operacion);
-    })
+    calculadora.ingresarNumeros(numeroA, numeroB); 
+    calculadora.seleccionarOperacion('Add')
+    calculadora.clickBtnCalcular();
+    resultado_operacion = numeroA + numeroB;
+    calculadora.getResultado().should('have.value', resultado_operacion);
   })
   it('Restar dos numeros', () => {
-    cy.get('#number1Field').type(4);
-    cy.get('#number2Field').type(3);
-    cy.get('#number1Field').invoke('val').then((numeroA)=>{
-      cy.get('#number2Field').invoke('val').then((numeroB)=>{
-        resultado_operacion = parseInt(numeroA) - parseInt(numeroB);
-      })
-    })
-    cy.get('#selectOperationDropdown').select('Subtract');
-    cy.get('#calculateButton').click();
-    cy.get('#numberAnswerField').invoke("val").then((resultado)=>{
-      expect(parseInt(resultado)).equal(resultado_operacion);
-    })
+    calculadora.ingresarNumeros(numeroA, numeroB); 
+    calculadora.seleccionarOperacion('Subtract')
+    calculadora.clickBtnCalcular();
+    resultado_operacion = numeroA - numeroB;
+    calculadora.getResultado().should('have.value', resultado_operacion);
+  })
+  it('Multiplicar dos numeros', () => {
+    calculadora.ingresarNumeros(numeroA, numeroB); 
+    calculadora.seleccionarOperacion('Multiply')
+    calculadora.clickBtnCalcular();
+    resultado_operacion = numeroA * numeroB;
+    calculadora.getResultado().should('have.value', resultado_operacion);
+  })
+  it('Dividir dos numeros', () => {
+    calculadora.ingresarNumeros(numeroA, numeroB); 
+    calculadora.seleccionarOperacion('Divide')
+    calculadora.clickBtnCalcular();
+    resultado_operacion = numeroA / numeroB;
+    calculadora.getResultado().should('have.value', resultado_operacion);
   })
 })
