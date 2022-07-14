@@ -23,7 +23,21 @@ class CalculadoraPage {
   }
 
   ingresarNumeros(numeroA, numeroB) {
+    this.getNumero1().clear();
     this.getNumero1().type(numeroA);
+    this.getNumero2().clear();
+    this.getNumero2().type(numeroB);
+    return this;
+  }
+
+  ingresarNumero1(numeroA) {
+    this.getNumero1().clear();
+    this.getNumero1().type(numeroA);
+    return this;
+  }
+
+  ingresarNumero2(numeroB) {
+    this.getNumero2().clear();
     this.getNumero2().type(numeroB);
     return this;
   }
