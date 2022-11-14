@@ -1,5 +1,4 @@
 /// <reference types="cypress" />
-let resultado_operacion = 0;
 
 class CalculadoraPage {
   getNumero1() {
